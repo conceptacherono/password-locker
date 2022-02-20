@@ -69,7 +69,13 @@ def main():
                 print('login success')
                 print('/n')
                 print('/n')
-                    
+
+        elif short_code == 'go':
+            break
+        else:
+            print('Enter valid code to continue')
+
+                        
                 
 
 
