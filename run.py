@@ -1,3 +1,4 @@
+from secrets import randbits
 import string
 from random import *
 from user import User
@@ -72,7 +73,7 @@ def main():
                     decision=input()
                     if decision=="G":
                         characters=string.ascli_letters + string.digits
-                        accountpassword="".join(choice(characters)for x in range(randit(6,16)))
+                        accountpassword="".join(choice(characters)for x in range(randbits(6,16)))
                         print(f"Password: {accountpassword}")
                     elif decision=="C":
                             print('enter your password')
@@ -99,7 +100,7 @@ def main():
             else:
                 print('Kindly choose a valid option')
                 print('\n')
-if __name__== '_main_':
+if  __name__== '_main_':
     main()                                        
 
 
