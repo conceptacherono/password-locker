@@ -1,3 +1,4 @@
+from email.policy import default
 import random
 from user import User
 
@@ -45,7 +46,18 @@ def main():
 
             else:
                 print('Welcome! {entered_username} to your account')
-                print('/n')    
+                print('/n')  
+
+        elif short_code == 'log':
+            print('welcome')
+            print('Enter user name')
+            default_user_name = input()
+            
+
+
+        
+
+
 
 
 
