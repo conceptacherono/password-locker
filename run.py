@@ -11,4 +11,9 @@ def main():
         short_code =input().lower()
         print('/n')
 
-        
+        if short_code == 'new':
+            print('create username')
+            created_user_name = input()
+
+            print('create password')
+            created_user_password = input()
