@@ -20,4 +20,12 @@ def main():
 
             print('confirm password')
             confirm_password = input()
-            
+
+            while confirm_password != created_user_password:
+                print('password do not match!')
+                print('enter correct password')
+                created_user_password = input()
+                print('confirm your password')
+                confirm_password = input()
+                
+
