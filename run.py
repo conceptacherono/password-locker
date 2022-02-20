@@ -99,7 +99,7 @@ def main():
             else:
                 print('Kindly choose a valid option')
                 print('\n')
-if _name_ == '_main_':
+if __name__== '_main_':
     main()                                        
 
 
