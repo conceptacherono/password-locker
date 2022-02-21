@@ -1,111 +1,286 @@
-from secrets import randbits
-import string
-from random import *
 from user import User
-from credentials import Credentials
-def create_user(firstname,lastname,username,userpassword):
-    newuser= User(firstname,lastname,username,userpassword)
-    return newuser
-def save_user(user):
+from credential import Credential
+
+def create_user(name, password):
+    '''
+    Function to create a user account
+    Args:
+        name : the name the user wants for the account
+        password : the password the user want for the account
+    '''
+
+    new_user = User(name,password)
+
+    return new_user
+
+def save_users(user):
+    '''
+    Function to save a user account
+    Args:
+        user : the user account to be saved
+    '''
+
     user.save_user()
-def delete_user(user):
-    user.delete_user()
-def find_user(number):
-    return User.find_by_number(number)
+
+def check_existing_users(name):
+    '''
+    Function that checks if a user account name already exists
+    Args:
+        name : the user account name
+    '''
+
+    return User.user_exist(name)
+
+def user_log_in(name, password):
+    '''
+    Function that allows a user to log into their credential account
+    Args:
+        name : the name the user used to create their user account
+        password : the password the user used to create their user account
+    '''
+    log_in = User.log_in(name, password)
+    if log_in != False:
+        return User.log_in(name, password)
+
 def display_users():
-    return User.display_users()
-def create_account(accountusername,accountname,accountpassword):
-    newaccount= Credentials(accountusername,accountname,accountpassword)
-    return newaccount
-def save_account(user):
-    user.save_account()
-def delete_account(user):
-    user.dele_account(user)
-def find_account(number):
-    return Credentials.find_by_number (number)
-def display_accounts():
-    return Credentials.display_accounts()
+    '''
+    Function that returns all the saved users 
+    '''
+
+    return User.display_user()
+
+def create_credentail(user_password, name, password):
+    '''
+    Function to create a credential 
+    Args:
+        user_password : the password for Credit Card Safe
+        name : the name of the account 
+        password : the password for the account
+    '''
+
+    new_credentail = Credential(user_password,name,password)
+
+    return new_credentail
+
+def save_credentials(credential):
+    '''
+    Function to save a credential
+    Args:
+        credential : the credential to be saved
+    '''
+
+    credential.save_credential()
+
+def check_existing_credentials(name):
+    '''
+    Function that checks if a user credential name already exists
+    Args:
+        name : the credential name
+    '''
+
+    return Credential.credential_exist(name)
+
+def display_credentials(password):
+    '''
+    Function that returns all the saved credentials
+    '''
+
+    return Credential.display_credential(password)
+
+def create_generated_password(name):
+    '''
+    Function that generates a password for the user 
+    Args:
+        name : the name of the account
+    '''
+    password = Credential.generate_password()
+
+    return password
+
 def main():
-    while  True:
-        print('Welcome to password locker,write new or log to start')
-        print('new -or- log')  
-        option=input()
-        if option == 'new':
-            print('Create account')
+    '''
+    Function running the CreditCard safe
+    '''
+
+    print('''Welcome to Credit card Safe \n
+Use these short codes to get around''')
+
+    while True:
+        '''
+        Loop that is running the entire application
+        '''
+
+        print('''   Short codes:
+        cu - create a Credit Card Safe account \n
+        du - display names of current Credit Card Safe users \n
+        lg - log into your Credit Card Safe account \n
+        ex - exit the Credit Card Safe account''')
+
+        # Get short codes from the user
+        short_code = input().lower()
+
+        if short_code == 'cu':
+            '''
+            Creating a Credit Card Safe account
+            '''
+
+            print("\n")
+            print("New Credit Card Safe Account")
             print("-"*10)
-            print('Enter your First Name')
-            firstname=input()
-            print('Enter your Last Name')
-            lastname=input()
-            print('Set your username')
-            username=input()
-            print('Set your password')
-            userpassword=input()
-            save_user(create_user(firstname,lastname,username,userpassword))
-            print('Your account was created successfully.Details....')
-            print("-"*10)
-            print(f"Name: {firstname} {lastname} \nUsername: {username} \nPassword {userpassword}")
-            print("\nUse Login to your account with your details")
-            print("-"*10)
-            print("\n \n")
-            #for user in display_users():
-            
-        elif option == "log":
-            print('Your username')
-            logInUsername=input()
-            print('your password')
-            logInPassword=input()
-            if find_user(logInPassword):
-                print('\n')
-                print('you can create multipe accounts (AC) and also view them (VC)')
-                print("-"*60)
-                print('AC -or- VC')
-                choose=input()
-                print('\n')
-                if choose == 'AC':
-                    print('Add your cred Account')
-                    print("-"*25)
-                    accountusername=logInUsername
-                    print('Acoount Name')
-                    accountname=input()
-                    print('\n')
-                    print("Generate automatic password(G) or Create new password(C)?")
-                    decision=input()
-                    if decision=="G":
-                        characters=string.ascli_letters + string.digits
-                        accountpassword="".join(choice(characters)for x in range(randbits(6,16)))
-                        print(f"Password: {accountpassword}")
-                    elif decision=="C":
-                            print('enter your password')
-                            accountpassword=input()
-                    else:
-                        print("please put in a valid choice")
-                    save_account(create_account(accountusername,accountname,accountpassword))
-                    print('\n')
-                    print(f'Username:{accountusername} \nAccount Name: {accountname} \nPassword: {accountpassword}') 
-                elif choose == "VC":
-                    if find_account(accountusername):
-                        print('Here is a list of your created accounts: ')
-                        print("-"*25)
-                        for user in display_accounts():
-                            print(f'Account: {user.accountname} \nPassword: {user.accountpassword} \n\n ')
-                        else:
-                            print('invalid creds!')
-                    else:
-                        print('PLEASE TRY AGAIN')
-                        print('\n')
-                else:
-                    print('Incorrect INFO please try again! Thankyou')
-                    print('\n')
+
+            print("User name ...")
+            user_name = input()
+
+            print("Password ...")
+            user_password = input()
+
+            # Create and save new user
+            save_users( create_user( user_name, user_password) )
+
+            print("\n")
+            print(f"{user_name} welcome to Credit Card Safe")
+            print("\n")
+
+        elif short_code == 'du':
+            '''
+            Display the names of the current users 
+            '''
+
+            if display_users():
+                print("\n")
+                print("Here are the current users of Credit Card Safe")
+                print("-"*10)
+
+                for user in display_users():
+                    print(f"{user.user_name}")
+                    print("-"*10)
             else:
-                print('Kindly choose a valid option')
-                print('\n')
-if  __name__== '_main_':
-    main()                                        
+                print("\n")
+                print("Credit Card Safe has no current user.\n    Be the first user :)")
+                print("\n")
 
+        elif short_code == 'lg':
+            '''
+            Logs in the user into their Credit Card Safe account
+            '''
+            print("\n")
+            print("Log into Credit Card Safe Account")
+            print("Enter the user name")
+            user_name = input()
 
+            print("Enter the password")
+            user_password = input()
 
+            if user_log_in(user_name,user_password) == None:
+                print("\n")
+                print("Please try again or create an account")
+                print("\n")
 
+            else:
 
+                user_log_in(user_name,user_password)
+                print("\n")
+                print(f'''{user_name} welcome to your Credentials\n
+                Use these short codes to get around''')
 
+                while True:
+                    '''
+                    Loop to run functions after logging in
+                    '''
+                    print('''  Short codes:
+        cc - add a credential \n
+        dc - display credentials \n
+        cg - create a credential with a generate password \n
+        ex - exit Credentials''')
 
+                    # Get short code from the user
+                    short_code = input().lower()
+
+                    if short_code == 'cc':
+                        '''
+                        Creating a Credential
+                        '''
+
+                        print("\n")
+                        print("New Credential")
+                        print("-"*10)
+
+                        print("Name of the credential ...")
+                        credential_name = input()
+
+                        print("Password of the credential ...")
+                        credential_password = input()
+
+                        # Create and save new user
+                        save_credentials( create_credentail( user_password, credential_name, credential_password) )
+
+                        print("\n")
+                        print(f"Credentials for {credential_name} have been created and saved")
+                        print("\n")
+
+                    elif short_code == 'dc':
+                        '''
+                        Displaying credential name and password
+                        '''
+
+                        if display_credentials(user_password):
+                            print("\n")
+                            print(f"{user_name}\'s credentials")
+                            print("-"*10)
+
+                            for credential in display_credentials(user_password):
+                                print(f"Account ..... {credential.credential_name}")
+                                print(f"Password .... {credential.credential_password}")
+                                print("-"*10)
+
+                        else:
+                            print("\n")
+                            print("You have no credentials")
+                            print("\n")
+
+                    elif short_code == 'cg':
+                        '''
+                        Creating a credential with a generated password
+                        '''
+
+                        print("\n")
+                        print("New Credential")
+                        print("-"*10)
+
+                        print("Name of the credential ...")
+                        credential_name = input()
+
+                        # Save new credential with its generated password
+                        save_credentials( Credential(user_password, credential_name, (create_generated_password(credential_name)) ) )
+                        print("\n")
+                        print(f"Credentials for {credential_name} have been created and saved")
+                        print("\n")
+
+                    elif short_code == 'ex':
+                        print(f"See you later {user_name}")
+                        print("\n")
+                        break
+
+                    else:
+                        print("\n")
+                        print(f'''{short_code} does not compute.
+    Please use the short codes''')
+                        print("\n")
+
+        elif short_code == 'ex':
+            '''
+            Exit Credit Card Safe
+            '''
+            print("\n")
+            print("Bye .....")
+
+            break
+
+        else:
+            print("\n")
+            print(f'''Come again, what's {short_code}?
+    Please use the short codes''')
+            print("\n")
+
+if __name__ == '__main__':
+    main()

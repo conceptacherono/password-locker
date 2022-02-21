@@ -1,42 +1,120 @@
 import unittest
 from user import User
+from credential import Credential
 
-class Testuser(unittest.TestCase):
+
+class TestUser(unittest.TestCase):
     '''
-    Test class that defines test cases for the user class behaviours.
+    Test class that defines test cases for the User Class behaviours
     Args:
-         unittest.TestCase: TestCase class that helps in creating test cases
+        unittest.TestCase : Test case class that helps create test cases
     '''
 
-def setUp(self):
-    '''
-    Set up method to run before each test cases.
-    '''
-    self.new_user = user("Concepta","Cherono","2022") # create contact object
-def test_init(self):
-    '''
-    test_init test case to test if the object is initialized properly
-    '''
+    def setUp(self):
+        '''
+        Set up method to run before each test case
+        '''
 
-    self.assertEqual(self.new_user.user_name,"Concepta")
+        # Create user object
+        self.new_user = User("Laila","Elgharabway")
 
 
-    self.assertEqual(self.new_user.password,"2022")
-def test_save_user(self):
-    '''
-    test_save_user test case to test if the user object is saved into the user list
-    '''
-    self.new_user.save_user() # saving the new contact
-    self.assertEqual(len(user.user_list),1)
-def test_delete_user(self):
-    '''
-    test_selete_contact to test if we can remove a contact from our contact list
-    '''
-    self.new_contact.save_contact()
-    test_user = user("Test","user","0768549788","test@user.com") # new contact
-    test_user.save_user()
+    def tearDown(self):
+        '''
+        tearDown method that cleans up after each test case is run
+        '''
 
-    self.new_user.delete_user() #deleting a contact object
-    self.assertEqual(len(user.user_list),1)
-if _name_ == '_main_':
-    unittest.main()
+        User.user_list = []
+
+    def test_init(self):
+        '''
+        Test case to test if the object is initialised properly
+        '''
+
+        self.assertEqual( self.new_user.user_name, "Laila" )
+        self.assertEqual( self.new_user.user_password, "Elgharabway" )
+
+    def test_save_user(self):
+        '''
+        Test case to test if the user object is saved into the user list
+        '''
+
+        # Saving the new user
+        self.new_user.save_user()
+
+        self.assertEqual( len(User.user_list), 1 )
+
+    def test_save_multiple_users(self):
+        '''
+        Test case to test if you can save multiple objects to user list
+        '''
+
+        # Save the new user
+        self.new_user.save_user()
+
+        test_user = User("sharon","do")
+
+        test_user.save_user()
+
+        self.assertEqual( len(User.user_list), 2)
+
+    def test_find_credential(self):
+        '''
+        Test case to test if the User module is importing from Credential module
+        '''
+
+        # Save the new user
+        self.new_user.save_user()
+
+        test_user = User("sharon","do")
+
+        test_user.save_user()
+
+        found_credential = User.find_credential("kcb")
+
+        self.assertEqual( found_credential, False )
+
+    def test_log_in(self):
+        '''
+        Test case to test if a user can log into their credentials
+        '''
+
+        # Save the new user
+        self.new_user.save_user()
+
+        test_user = User("sharon","do")
+
+        test_user.save_user()
+
+        found_credential = User.log_in("sharon", "do")
+
+        self.assertEqual( found_credential,  Credential.credential_list )   
+    
+    def test_display_user(self):
+        '''
+        Test case to test if a user can see a list of all the users saved
+        '''
+        
+        self.assertEqual( User.display_user() , User.user_list )
+        
+    def test_user_exist(self):
+        
+        '''
+        Test to check if we can return a boolean if we can't find the user
+        '''
+        
+        # Save the new user
+        self.new_user.save_user()
+
+        test_user = User("sharon","do")
+
+        test_user.save_user()
+        
+        # use contact exist method
+        user_exists = User.user_exist("sharon")
+        
+        self.assertTrue(user_exists)
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)
